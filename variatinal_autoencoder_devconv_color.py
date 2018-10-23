@@ -60,9 +60,9 @@ def plot_results(models,
     """
 
     encoder, decoder = models
-    x_test, y_test = data
+    x_test = data
     os.makedirs(model_name, exist_ok=True)
-
+"""
     filename = os.path.join(model_name, "vae_mean.png")
     # display a 2D plot of the digit classes in the latent space
     z_mean, _, _ = encoder.predict(x_test,
@@ -74,11 +74,11 @@ def plot_results(models,
     plt.ylabel("z[1]")
     plt.savefig(filename)
     plt.show()
-
+""" 
     filename = os.path.join(model_name, "digits_over_latent.png")
     # display a 30x30 2D manifold of digits
-    n = 30
-    digit_size = 28
+    n = 5
+    digit_size = 128
     figure = np.zeros((digit_size * n, digit_size * n))
     # linearly spaced coordinates corresponding to the 2D plot
     # of digit classes in the latent space
@@ -205,7 +205,7 @@ if __name__ == '__main__':
     parser.add_argument("-m", "--mse", help=help_, action='store_true')
     args = parser.parse_args()
     models = (encoder, decoder)
-    data = (x_test, y_test)
+    data = x_test
 
     # VAE loss = mse_loss or xent_loss + kl_loss
     if args.mse:
