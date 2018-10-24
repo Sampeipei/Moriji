@@ -180,7 +180,7 @@ for i in range(2):
                         padding='same')(x)
     filters //= 2
 
-outputs = Conv2DTranspose(filters=1,
+outputs = Conv2DTranspose(filters=3,
                           kernel_size=kernel_size,
                           activation='sigmoid',
                           padding='same',
