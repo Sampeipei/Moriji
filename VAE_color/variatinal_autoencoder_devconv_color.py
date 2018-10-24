@@ -228,12 +228,13 @@ if __name__ == '__main__':
         vae.load_weights(args.weights)
     else:
         # train the autoencoder
-        print("~~~~~~~~~~ start learning ~~~~~~~~~~")
+        print("~~~~~~~~~~start fitting VAE~~~~~~~~~~")
         vae.fit(x_train,
                 epochs=epochs,
                 batch_size=batch_size,
                 validation_data=(x_test, None))
-        print("~~~~~~~~~~ finish learning ~~~~~~~~~~")
-        vae.save_weights('vae_cnn_color_128x128.h5')
+        print("~~~~~~~~~~finish fitting VAE~~~~~~~~~~")
+        vae.save_weights('vae_cnn_color.h5')
+        vae.save('vae_cnn_color_model.h5')
 
     plot_results(models, data, batch_size=batch_size, model_name="vae_cnn")
