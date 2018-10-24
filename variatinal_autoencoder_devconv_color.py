@@ -134,7 +134,7 @@ input_shape = (image_size, image_size, 3)
 batch_size = 128
 kernel_size = 3
 filters = 16
-latent_dim = 2 # ここで洗剤変数の次元数を設定
+latent_dim = 10 # ここで洗剤変数の次元数を設定
 epochs = 30
 
 # VAE model = encoder + decoder
@@ -228,10 +228,12 @@ if __name__ == '__main__':
         vae.load_weights(args.weights)
     else:
         # train the autoencoder
+        print("学習開始")
         vae.fit(x_train,
                 epochs=epochs,
                 batch_size=batch_size,
                 validation_data=(x_test, None))
+        print("学習終了")
         vae.save_weights('vae_cnn_color.h5')
 
     plot_results(models, data, batch_size=batch_size, model_name="vae_cnn")
