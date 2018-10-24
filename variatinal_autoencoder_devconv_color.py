@@ -103,7 +103,7 @@ def plot_results(models,
     plt.yticks(pixel_range, sample_range_y)
     plt.xlabel("z[0]")
     plt.ylabel("z[1]")
-    plt.imshow(figure, cmap='Greys_r')
+    plt.imshow(figure)
     plt.savefig(filename)
     plt.show()
 
