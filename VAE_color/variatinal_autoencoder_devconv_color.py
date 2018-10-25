@@ -62,24 +62,24 @@ def plot_results(models,
     encoder, decoder = models
     x_test = data
     os.makedirs(model_name, exist_ok=True)
-
+"""
     filename = os.path.join(model_name, "vae_mean.png")
     # display a 2D plot of the digit classes in the latent space
     z_mean, _, _ = encoder.predict(x_test,
                                    batch_size=batch_size)
     plt.figure(figsize=(12, 10))
-    plt.scatter(z_mean[:, 0], z_mean[:, 1]) #, c=y_test)
-    #plt.colorbar()
+    plt.scatter(z_mean[:, 0], z_mean[:, 1], c=y_test)
+    plt.colorbar()
     plt.xlabel("z[0]")
     plt.ylabel("z[1]")
     plt.savefig(filename)
     plt.show()
- 
+""" 
     filename = os.path.join(model_name, "digits_over_latent.png")
     # display a 30x30 2D manifold of digits
     n = 5
     digit_size = 128
-    figure = np.zeros((digit_size * n, digit_size * n, 3))
+    figure = np.zeros((digit_size * n, digit_size * n))
     # linearly spaced coordinates corresponding to the 2D plot
     # of digit classes in the latent space
     grid_x = np.linspace(-4, 4, n)
@@ -89,7 +89,7 @@ def plot_results(models,
         for j, xi in enumerate(grid_x):
             z_sample = np.array([[xi, yi]])
             x_decoded = decoder.predict(z_sample)
-            digit = x_decoded[0].reshape(digit_size, digit_size, 3)
+            digit = x_decoded[0].reshape(digit_size, digit_size)
             figure[i * digit_size: (i + 1) * digit_size,
                    j * digit_size: (j + 1) * digit_size] = digit
 
@@ -228,13 +228,15 @@ if __name__ == '__main__':
         vae.load_weights(args.weights)
     else:
         # train the autoencoder
-        print("~~~~~~~~~~start fitting VAE~~~~~~~~~~")
+        print("start fitting VAE"")
         vae.fit(x_train,
                 epochs=epochs,
                 batch_size=batch_size,
                 validation_data=(x_test, None))
-        print("~~~~~~~~~~finish fitting VAE~~~~~~~~~~")
+        print("finish fitting VAE"")
         vae.save_weights('vae_cnn_color.h5')
+        encoder.save_weights('encoder_cnn_color.h5')
+        decoder.save_weights('decoder_cnn_color.h5')
         vae.save('vae_cnn_color_model.h5')
 
     plot_results(models, data, batch_size=batch_size, model_name="vae_cnn")
